@@ -1,0 +1,2 @@
+Mongo db configuration:
+https://www.baeldung.com/spring-data-mongodb-connection
