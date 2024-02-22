@@ -34,7 +34,7 @@ public class GameBacklogServiceImpl implements GameBacklogService {
         // check if the game backlog exists
         if ( !gameBacklogRepository.existsById(id) ) {
             // handle not existent item scenario
-            throw new NotFoundException(ErrorCode.GAME_BACKLOG_NOT_FOUND.getMessage());
+            throw new NotFoundException(ErrorCode.GAME_BACKLOG_NOT_FOUND);
         }
 
         // get the current backlog

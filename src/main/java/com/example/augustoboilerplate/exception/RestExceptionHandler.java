@@ -11,11 +11,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 
 @ControllerAdvice // used to handle exceptions in whole application
+// Check image in doc.
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleNotFoundException(NotFoundException exception, WebRequest request) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(exception.getMessage(), exception.getErrorCode().getCode());
+        return new ResponseEntity<>(apiErrorMessage, HttpStatus.BAD_REQUEST);
     }
 
 }
