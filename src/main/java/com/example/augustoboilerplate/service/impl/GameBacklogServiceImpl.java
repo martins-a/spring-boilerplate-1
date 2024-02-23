@@ -2,6 +2,7 @@ package com.example.augustoboilerplate.service.impl;
 
 import com.example.augustoboilerplate.constant.ErrorCode;
 import com.example.augustoboilerplate.dto.AddGameBacklogRequest;
+import com.example.augustoboilerplate.dto.UpdateGameBacklogRequest;
 import com.example.augustoboilerplate.exception.NotFoundException;
 import com.example.augustoboilerplate.model.GameBacklog;
 import com.example.augustoboilerplate.repository.GameBacklogRepository;
@@ -17,6 +18,7 @@ public class GameBacklogServiceImpl implements GameBacklogService {
     @Autowired
     private GameBacklogRepository gameBacklogRepository;
 
+    @Override
     public void createGameBacklog(AddGameBacklogRequest request) {
 
         GameBacklog backlogItem = GameBacklog.builder()
@@ -29,6 +31,7 @@ public class GameBacklogServiceImpl implements GameBacklogService {
 
     }
 
+    @Override
     public GameBacklog completeGameOnBacklog(String id, int finalScore) {
 
         // check if the game backlog exists
@@ -44,7 +47,49 @@ public class GameBacklogServiceImpl implements GameBacklogService {
 
             currentBacklogItem.setFinalScore(finalScore);
 
-            gameBacklogRepository.save(currentBacklogItem);
+            return gameBacklogRepository.save(currentBacklogItem);
+
+        }
+
+        return null;
+
+    }
+
+    @Override
+    public GameBacklog updateGameBacklog(String id, UpdateGameBacklogRequest request) {
+
+        // check if the game backlog exists
+        if ( !gameBacklogRepository.existsById(id) ) {
+            // handle not existent item scenario
+            throw new NotFoundException(ErrorCode.GAME_BACKLOG_NOT_FOUND);
+        }
+
+        // get the current backlog
+        GameBacklog currentBacklogItem = gameBacklogRepository.findById(id).orElse(null);
+
+        if ( currentBacklogItem != null ) {
+
+            if ( request.getFinalScore() > 0 ) {
+                currentBacklogItem.setFinalScore(request.getFinalScore());
+            }
+
+            if ( request.getConclusionDate() != null ) {
+                currentBacklogItem.setConclusionDate(request.getConclusionDate());
+            }
+
+            if ( request.getGameTitle() != null ) {
+                currentBacklogItem.setGameTitle(request.getGameTitle());
+            }
+
+            if ( request.getHypeFactor() > 0 ) {
+                currentBacklogItem.setHypeFactor(request.getHypeFactor());
+            }
+
+            if ( request.getConclusionDate() != null ) {
+                currentBacklogItem.setConclusionDate(request.getConclusionDate());
+            }
+
+            return gameBacklogRepository.save(currentBacklogItem);
 
         }
 

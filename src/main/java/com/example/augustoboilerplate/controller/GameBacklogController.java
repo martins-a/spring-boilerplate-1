@@ -2,6 +2,7 @@ package com.example.augustoboilerplate.controller;
 
 import com.example.augustoboilerplate.dto.AddGameBacklogRequest;
 import com.example.augustoboilerplate.dto.CompleteGameBacklogRequest;
+import com.example.augustoboilerplate.dto.UpdateGameBacklogRequest;
 import com.example.augustoboilerplate.model.GameBacklog;
 import com.example.augustoboilerplate.service.GameBacklogService;
 import org.apache.coyote.Response;
@@ -41,6 +42,21 @@ public class GameBacklogController {
         } else {
             return ResponseEntity.notFound().build();
         }
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GameBacklog> completeGameBacklog(@PathVariable String id,
+                                                           @RequestBody UpdateGameBacklogRequest request) {
+
+        GameBacklog result = gameBacklogService.updateGameBacklog(id, request);
+
+        if ( result != null ) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
 
     }
 
