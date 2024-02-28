@@ -5,7 +5,6 @@ import com.example.augustoboilerplate.dto.CompleteGameBacklogRequest;
 import com.example.augustoboilerplate.dto.UpdateGameBacklogRequest;
 import com.example.augustoboilerplate.model.GameBacklog;
 import com.example.augustoboilerplate.service.GameBacklogService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,8 +56,15 @@ public class GameBacklogController {
             return ResponseEntity.notFound().build();
         }
 
-
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+
+        gameBacklogService.deleteGameBacklog(id);
+        // return 204
+        return ResponseEntity.noContent().build();
+
+    }
 
 }

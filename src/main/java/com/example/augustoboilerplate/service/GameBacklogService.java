@@ -9,4 +9,6 @@ public interface GameBacklogService {
     GameBacklog completeGameOnBacklog(String id, int finalScore);
 
     GameBacklog updateGameBacklog(String id, UpdateGameBacklogRequest request);
+
+    void deleteGameBacklog(String id);
 }

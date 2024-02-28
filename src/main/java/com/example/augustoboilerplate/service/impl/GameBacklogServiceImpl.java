@@ -56,6 +56,21 @@ public class GameBacklogServiceImpl implements GameBacklogService {
     }
 
     @Override
+    public void deleteGameBacklog(String id) {
+
+        // check if the game backlog exists
+        if ( !gameBacklogRepository.existsById(id) ) {
+            // handle not existent item scenario
+            throw new NotFoundException(ErrorCode.GAME_BACKLOG_NOT_FOUND);
+        }
+
+        // Delete
+        gameBacklogRepository.deleteById(id);
+
+
+    }
+
+    @Override
     public GameBacklog updateGameBacklog(String id, UpdateGameBacklogRequest request) {
 
         // check if the game backlog exists
